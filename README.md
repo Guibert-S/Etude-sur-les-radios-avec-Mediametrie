@@ -1,3 +1,4 @@
 # Etude-sur-les-radios-avec-Mediametrie
-Dans le cadre d'un projet de DUT de 2ème année, j'ai réaliser  une étude et  la présentation des résultats en R shiny sur les radios avec Médiamétrie leader dans le calucl de l'audience en France.
+Dans le cadre d'un projet de DUT de 2ème année, j'ai réaliser  une étude sur les radios avec Médiamétrie leader dans le calucl de l'audience en France.
+l'objectif était la production d'un rapport puis la réalsiaiton d'une application en R shiny afin de présenter les résultat.
 
