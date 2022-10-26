@@ -1,0 +1,20 @@
+---
+title: 'Analyse des Correspondances Multiples'
+author: 'Jeu de données data_heure'
+output:
+  html_document: default
+---
+Ce jeu de données contient 4500 individus et 51 variables, 4 variables quantitatives sont illustratives.
+
+- - -
+
+```{r, echo = FALSE}
+library(FactoMineR)
+load('C:/Users/samue/OneDrive/Bureau/Ecole/2A/Projet_S3/DonneesTFE_Groupe2/Workspace.RData')
+```
+### 1. Observation d'individus extrêmes
+L'analyse des graphes ne révèle aucun individu singulier.
+
+- - -
+
+### 2. Distribution de l'inertie

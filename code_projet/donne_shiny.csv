@@ -1,0 +1,37 @@
+﻿Radio;Audience_Week_end;Audience_Semaine;Baisse;Augmentation;Horaire;Horaire_semaine;Horaire_Week_end;CSP_test;Horaire_CSP;Groupe_CSP;CSP_Week;CSP_Semaine
+Radio Classique;3,6;4;10;11,1;5-6H;9,8;5;CSP-;5-6H;CSP-;40,2;46,8
+M Radio;3,7;5,5;32,7;14,9;6-9H;60,1;27;CSP+;6-9H;CSP-;23,2;28,4
+France Musique;5,4;8;32,5;14,8;9-12H;29,1;32,6;Etudiants;9-12H;CSP-;27,5;33,6
+France Culture;5,6;8,6;34,9;15,4;12-14 H;22,2;18,2;Retraite_inactifs;12-14 H;CSP-;25,5;36,3
+Rires et Chansons;5,7;8,7;34,5;15,3;14-16H;14,3;12,2;;14-16H;CSP-;41,4;45,8
+Skyrock;5,9;9,8;39,8;16,6;16-18H;29,2;11,5;;16-18H;CSP-;37;34,9
+Cherie FM;8;10,4;23,1;13;18-20H;22,5;11,7;;18-20H;CSP-;26,2;28,6
+Fun Radio;8,1;10,8;25;13,3;20-24H;9,2;8,2;;20-24H;CSP-;24,5;29,1
+RCM;8,1;11,8;31,4;14,6;24-5H;2,5;2,3;;24-5H;CSP-;31,8;36,3
+Virgin;8,2;13,1;37,4;16;;;;;5-6H;CSP+;13,4;26,8
+Europe 1 ;9,1;13,1;30,5;14,4;;;;;6-9H;CSP+;25,3;39,8
+RFM;10,5;13,1;19,8;12,5;;;;;9-12H;CSP+;20,5;22,7
+RTL2;10,7;13,9;23;13;;;;;12-14 H;CSP+;18,5;28
+France Bleu;10,9;14,4;24,3;13,2;;;;;14-16H;CSP+;11;25,1
+France Info;12,7;16,2;21,6;12,8;;;;;16-18H;CSP+;19,3;39,4
+Nostalgie;13,1;17,2;23,8;13,1;;;;;18-20H;CSP+;21,4;46,4
+RTL;13,3;19,1;30,4;14,4;;;;;20-24H;CSP+;27,2;34,3
+NRJ;14,6;19,3;24,4;13,2;;;;;24-5H;CSP+;22,7;25,5
+France Inter;15,4;20,2;23,8;13,1;;;;;5-6H;Etudiants;3,1;5,6
+;;;;;;;;;6-9H;Etudiants;2,5;9,1
+;;;;;;;;;9-12H;Etudiants;6,2;2,5
+;;;;;;;;;12-14 H;Etudiants;7,4;3,3
+;;;;;;;;;14-16H;Etudiants;8,3;2,7
+;;;;;;;;;16-18H;Etudiants;11,1;7,7
+;;;;;;;;;18-20H;Etudiants;13,1;7,1
+;;;;;;;;;20-24H;Etudiants;15,2;12,2
+;;;;;;;;;24-5H;Etudiants;6,8;3,9
+;;;;;;;;;5-6H;Retraite_inactifs;43,3;20,7
+;;;;;;;;;6-9H;Retraite_inactifs;49;22,8
+;;;;;;;;;9-12H;Retraite_inactifs;45,8;41,2
+;;;;;;;;;12-14 H;Retraite_inactifs;48,7;32,3
+;;;;;;;;;14-16H;Retraite_inactifs;39,3;26,4
+;;;;;;;;;16-18H;Retraite_inactifs;32,6;18
+;;;;;;;;;18-20H;Retraite_inactifs;39,3;17,8
+;;;;;;;;;20-24H;Retraite_inactifs;33,1;24,4
+;;;;;;;;;24-5H;Retraite_inactifs;38,6;34,3

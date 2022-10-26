@@ -1,0 +1,289 @@
+library(shiny)
+library(shinydashboard)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(tidyverse)
+library(png)
+
+#Chargement des donnees
+df = read.csv2(file="donne_shiny.csv") # donne page 1 
+df2 = read.csv2(file="donne_shiny2.csv") # donne page 2 ...
+df3 =  read.csv2(file="donne_shiny3.csv")
+df4 =  read.csv2(file="df4.csv")
+df5 =  read.csv2(file="df5.csv")
+colnames(df3)= c("Radio","Confiance","Age_X","Age_Y","CSP_X","CSP_Y","Modalite_X","Modalite_Groupe","Modalite_Y")
+colnames(df) = c("Radio","Audience_Week_end","Audience_Semaine","Baisse","Augmentation" ,"Horaire",
+                 "Horaire_semaine","Horaire_Week_end","CSP","Horaire_CSP","Groupe_CSP","CSP_Week","CSP_Semaine")
+colnames(df2) = c("Radio","Groupe_ecoute_internet","Ecoute_internet","Age_X","Age_Y","Abonne_Youtube" )
+df4 = df4[,-1]
+df5 = df5[,-1]
+
+shinyApp(
+  ui = dashboardPage(
+    # titre 
+    dashboardHeader(title = "Etude sur les radios en France ",
+                    titleWidth = 400),
+    # barre de navigation   
+    #icon : (https://fontawesome.com/icons?d=gallery&p=2&q=clock)
+    dashboardSidebar(sidebarMenu(
+      menuItem("La temporalité d'écoute", tabName = "vue", icon = icon("clock")),
+      menuItem("Les usages multimédias", tabName = "top", icon = icon("internet-explorer")),
+      menuItem("La confiance des auditeurs", tabName = "confiance", icon = icon("handshake")),
+      menuItem("Les radios régionales", tabName = "map", icon = icon("globe-europe")),
+      menuItem("L'évolution des radios", tabName = "evolution", icon = icon("chart-line")),
+      menuItem("Conclusion", tabName = "conclusion", icon = icon("book-open")),
+      menuItem("Données et panel Médiamétrie", icon = icon("database"), href = "https://www.mediametrie.fr/fr/panel-radio-20192020")
+     
+    )),
+    
+    # Body
+    dashboardBody( 
+      # Plusieurs pages
+      tabItems( 
+        # 1ere page
+        tabItem(tabName = "vue",
+        # Menu de selection
+        sidebarPanel(
+          selectInput('xcol','X Variable', names(df)),
+           selectInput('ycol','Y Variable', names(df)),
+            selectInput('groupe',"Groupe",c("Aucune","CSP")),
+            selected = names(df)[[2]]
+          ),
+      
+          box(
+             plotlyOutput('plot'))
+        ),
+    #2eme page usages
+    tabItem(tabName = "top",
+            h2("Les différents usages des multimédias ont-ils une influence sur nos écoutes de radio"),
+            sidebarPanel(
+              selectInput('xcol2','X Variable', names(df2)),
+              selectInput('ycol2','Y Variable', names(df2)),
+              selectInput('groupe2',"Groupe",c("Aucune","Ecoute_internet")),
+              selected = names(df2)[[2]]
+            ),
+            # plot 2eme page
+            box(
+              plotlyOutput('plot2')),
+            
+            
+            textOutput("selected_var")
+            
+            ),
+    #3eme page confiance
+    tabItem(tabName = "confiance",
+            h2("L'ancrage de la radio sur son territoire et son époque"),
+            sidebarPanel(
+              selectInput('xcol3','X Variable', names(df3)),
+              selectInput('ycol3','Y Variable', names(df3)),
+              selectInput('choix3',"Groupe",c("Aucune","modalite")),
+              selected = names(df3)[[2]]
+            ),
+            # plot 3eme page
+            box(
+              plotlyOutput('plot3'))
+            
+            
+           
+            
+    ),
+    
+    #4eme page radio regionales
+    tabItem(tabName = "map",
+            h2("Les radios régionales sont-elles différentes des radios nationales ?"),
+            sidebarPanel(
+              selectInput('xcol4','X Variable', names(df4)),
+              selectInput('ycol4','Y Variable', names(df4)),
+              selectInput('choix4',"Groupe",c("Region","Info")),
+              selected = names(df4)[[2]]
+            ),
+            # plot 4eme page
+            fluidPage( box(
+              plotlyOutput('plot4')),
+            
+              #carte de France
+           box(tags$img(src='Image2.png',height=400,width=350),
+                title = "Station la plus écouté selon la région en France métropolitaine",
+                width = 4))
+            
+            
+            
+            
+    ),
+    
+    #5eme page evolution radio
+    tabItem(tabName = "evolution",
+            h2("L'évolutions des radios"),
+            sidebarPanel(
+              selectInput('xcol5','X Variable', names(df5)),
+              selectInput('ycol5','Y Variable', names(df5)),
+              selected = names(df5)[[2]]
+            ),
+            # plot 5eme page
+            fluidPage( box(
+              plotlyOutput('plot5')))),
+    
+    # Page conclusion 
+    tabItem(tabName = "conclusion",
+            h1("Conclusion : "),
+            
+            # plot 5eme page
+            fluidRow( box(h3(
+             "- Diversité des radios en France avec des particularitées"),br(),box(
+             "- Typologie des radios (socio-culturel, thématique, proximité)"),br(),box(
+             "- Ecoute en semaine (migration pendulaitre et dans la voiture) "),br(),box(
+             "- Changement de l'auditoire le week-end (davantage de senior)"),br(),box(
+             "- La radio est le média auquel les Français ont le plus confiance"),br(),box(
+             "- Evolution des supports d'écoutes (de plus en plus d'écoute sur internet)"),br(),box(
+             "- Une confiance dans l'évolution et un attachement particulier à ce média et en particulier aux
+             radios du service publique"))), box(position="left",tags$img(src='Image_radio.png',height=150,width=100))
+              
+
+            
+    )),
+    
+    
+      
+    #titre de la page internet
+    title = "Dashboard Mediametrie",
+    skin = "blue"
+    
+    )),
+  
+  
+  server = function(input, output) {
+    
+    
+    # parametre X et Y page 1 
+    x <- reactive({
+      df[,input$xcol]
+    })
+    
+    y <- reactive({
+      df[,input$ycol]
+    })
+    
+    # parametre X et Y page 2 
+    x2 <- reactive({
+      df2[,input$xcol2]
+    })
+    
+    y2 <- reactive({
+      df2[,input$ycol2]
+    })
+    
+    # parametre X et Y page 3 Confiance
+    x3 <- reactive({
+      df3[,input$xcol3]
+    })
+    
+    y3 <- reactive({
+      df3[,input$ycol3]
+    })
+    
+    #parametre X et Y page 4 region
+    x4 <- reactive({
+      df4[,input$xcol4]
+    })
+    
+    y4 <- reactive({
+      df4[,input$ycol4]
+    })
+    
+    #parametre X et Y page 4 region
+    x5 <- reactive({
+      df5[,input$xcol5]
+    })
+    
+    y5 <- reactive({
+      df5[,input$ycol5]
+    })
+    
+    
+    
+    # choix CSP 
+    option2 <- reactive({
+      input$groupe
+    })
+    
+    option3 <- reactive({
+      input$groupe2
+    })
+    
+    option_page3 <- reactive({
+      input$choix3
+    })
+    
+    
+  
+    #plot page 1
+    
+      output$plot<- 
+        renderPlotly(
+          if(input$groupe=="Aucune"){
+            plot2 <- plot_ly(x = x(),y = y(), type = 'bar') %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }else{
+            plot2 <- plot_ly(df,x = x(),y =y(), color=~df$Groupe_CSP,type = 'bar') %>% layout(barmode ="stack") %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+             
+          }
+        )
+    
+      #plot page 2 
+      output$plot2<- 
+        renderPlotly(
+          if(input$groupe2=="Aucune"){
+            plot2 <- plot_ly(x = x2(),y = y2(), type = 'bar') %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }else{
+            plot2 <- plot_ly(df2,x = x2(),y =y2(), color=~df2$Groupe_ecoute_internet,type = 'bar') %>% layout(barmode ="stack") %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }
+          
+        )
+      
+      #plot page 3 
+      output$plot3<- 
+        renderPlotly(
+          if(input$choix3=="Aucune"){
+            plot3 <- plot_ly(x = x3(),y = y3(), type = 'bar',color = "red") %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }else{
+            plot3 <- plot_ly(df3,x = x3(),y =y3(), color=~df3$Modalite_Groupe,type = 'bar')  %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }
+          
+        )
+      
+      
+      #plot4
+      output$plot4<- 
+        renderPlotly(
+          if(input$choix4=="Region"){
+            plot4 <- plot_ly(x = x4(),y = y4(), type = 'bar',color = "yellow") %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }else{
+            plot4 <- plot_ly(df4,x = x4(),y =y4() ,type = 'bar',color=~df4$Actualites_groupe)  %>% layout(xaxis=list(categoryarray = x(),categoryorder="array"))
+          }
+          
+        )
+      
+      #plot 5 
+      output$plot5<- 
+        renderPlotly(
+            plot5 <- plot_ly(x = x5(),y = y5(), type = 'bar',color = "red")
+        )
+         
+        
+
+      
+     
+        
+       
+      
+     
+      
+      
+      output$selected_var <- renderText({ 
+        paste("Vous avez sélectionnez", input$groupe)
+      })
+  
+    
+    
+  }
+)
